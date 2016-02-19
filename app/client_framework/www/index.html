@@ -21,15 +21,25 @@
     <script src="cordova.js"></script>          <!-- phantom library, needed for Cordova api calls, added during build -->
     <script src="js/app.js"></script>           <!-- recommended location of your JavaScript code relative to other JS files -->
     <script src="xdk/init-dev.js"></script>     <!-- normalizes device and document ready events, see README for details -->
-    <link href="3rdParty/bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="library/bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
     
 </head>
 
 <body>
-<h1>Hello, world!</h1>
-    <p>Hello, ChickTech</p>
-    <p><a href="../plugins/registration.html" page="registration-page">Mentor Registration</a></p>
-    <p><a page="list-page">Mentor List</a></p>    
-    <p><a page="settings-page">Settings</a></p>
+<h1>Chick tech App</h1>
+    <p>Welcome</p>
+        <div class="dropdown">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Available Features
+      <span class="caret"></span></button>
+      <ul class="dropdown-menu">
+        <li><a href="#">Registration</a></li>
+        <li><a href="#">Mentors</a></li>
+        <li><a href="#">Mentee</a></li>
+        <li><a href="#">Job Opportunities</a></li>
+        <li><a href="#">Resource Sharing</a></li>
+        <li><a href="#">Support</a></li>
+      </ul>
+    </div>
+    
 </body>
 </html>
