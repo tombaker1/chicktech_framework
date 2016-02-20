@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<!--
+  * Please see the included README.md file for license terms and conditions.
+  -->
+<head>
+    <title>Blank Cordova Mobile App Project Template (Lite)</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+    <!-- see http://webdesign.tutsplus.com/tutorials/htmlcss-tutorials/quick-tip-dont-forget-the-viewport-meta-tag -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <style>
+        /* following two viewport lines are equivalent to the meta viewport statement above, needed for Windows */
+        /* see http://www.quirksmode.org/blog/archives/2014/05/html5_dev_conf.html and http://dev.w3.org/csswg/css-device-adapt/ */
+        @-ms-viewport { width: 100vw ; zoom: 100% ; }  @viewport { width: 100vw ; zoom: 100% ; }
+        @-ms-viewport { user-zoom: fixed ; }           @viewport { user-zoom: fixed ; }
+    </style>
+
+    <script src="library/jquery/jquery-2.2.0.min.js"></script>
+    <script src="library/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+    <script src="cordova.js"></script>          <!-- phantom library, needed for Cordova api calls, added during build -->
+    <script src="js/app.js"></script>           <!-- recommended location of your JavaScript code relative to other JS files -->
+    <script src="xdk/init-dev.js"></script>     <!-- normalizes device and document ready events, see README for details -->
+    <link href="library/bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script>
+    
+    function reg(){
+        $("#main").hide()
+        $("#registration").show()
+    }
+    
+    function about(){
+       alert("You cant contact us by email chicktech@gmail.com")
+    }
+    function res(){
+       alert("List of Resources SW, HW, Training Material")
+    }
+    function jobs(){
+       alert("List of Intern jobs at Intel")
+    }
+        
+    function login(){
+        var name = $("#name").val();
+        var email = $("#email").val();
+        var company = $("#company").val();
+        var expertise = $("#expertise").val();
+        var areaofinterest = $("#areaofinterest").val();
+        var obj = {data:{profile:{name:name,email:email,company:company,expertise:expertise,areaofinterest:areaofinterest}}};
+        alert(JSON.stringify(obj));
+    }    
+    </script>
+</head>
+
+<body>
+<h1>Chick tech App</h1>
+    <div id="main">
+    <p>Welcome to Chick Tech</p>
+        <div class="dropdown">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Available Features
+      <span class="caret"></span></button>
+      <ul class="dropdown-menu">
+        <li><a href="#" onclick="reg()">Registration</a></li>
+
+
+        <li><a href="#">Mentors</a></li>
+        <li><a href="#">Mentee</a></li>
+        <li><a href="#" onclick="jobs()">Job Opportunities</a></li>
+        <li><a href="#" onclick="res()">Resource Sharing</a></li>
+        <li><a href="#">Support</a></li>
+        <li><a href="#">Search</a></li>
+        <li><a href="#" onclick="about()">About us</a></li>
+      </ul>
+    </div>
+    </div>
+    <div id="registration" style="display:none">
+                <form role="form">
+                  <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="name" class="form-control" id="name">
+                  </div>
+                  <div class="form-group">
+                    <label for="email">Email address:</label>
+                    <input type="email" class="form-control" id="email">
+                  </div>
+                  <div class="form-group">
+                    <label for="Company">Company:</label>
+                    <input type="company" class="form-control" id="company">
+                  </div>
+                 <div class="form-group">
+                    <label for="Expertise">Expertise:</label>
+                    <input type="expertise" class="form-control" id="expertise">
+                  </div>
+                  <div class="form-group">
+                    <label for="AreaofInterest">Area of Interest:</label>
+                    <input type="areaofinterest" class="form-control" id="areaofinterest">
+                  </div>
+                    
+                  <div class="checkbox">
+                    <label><input type="checkbox">Are you a Mentor ? </label>
+                  </div>
+                  <button onclick="login()" class="btn btn-default">Submit</button>
+                </form>
+
+                 
+    </div>
+</body>
+</html>
