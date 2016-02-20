@@ -42,6 +42,11 @@
        alert("List of Events at Intel");
     }
         
+         function cancelRegistration() {
+            $("#registration").hide()
+            $("#main").show()
+
+        }
         function sendRegistration(message) {
             console.log(message);
             var serverUrl = "http://192.168.1.236:9000/user";
@@ -58,10 +63,12 @@
 
             request.done(function( msg ) {
                 console.log(msg);
+                cancelRegistration();
                 });
  
             request.fail(function( jqXHR, textStatus ) {
                console.log("Request failed: " + textStatus);
+                cancelRegistration();
             });
 
         }
@@ -79,6 +86,13 @@
         sendRegistration(message);
     }    
         
+               
+         function closeMentors() {
+            $("#mentors").hide()
+            $("#main").show()
+
+        }
+
         function getMentors() {
             var serverUrl = "http://192.168.1.236:9000/user";
             var request = $.ajax({
@@ -93,6 +107,7 @@
                 for (i = 0; i < mentorList.length; i++) {
                     var m = mentorList[i];
                     console.log(m.name);
+                    $("#mentor-list").append("<li>" + m.name + "</li>")
                 }
                 });
  
@@ -101,6 +116,13 @@
             });
   
         }
+    function mentors(){
+        $("#main").hide()
+        $("#mentors").show()
+        getMentors()
+    }
+        
+
     </script>
 </head>
 
@@ -115,7 +137,7 @@
         <li><a href="#" onclick="reg()">Registration</a></li>
 
 
-        <li><a href="#">Mentors</a></li>
+        <li><a href="#" onclick="mentors()" >Mentors</a></li>
         <li><a href="#">Mentee</a></li>
         <li><a href="#" onclick="jobs()">Job Opportunities</a></li>
         <li><a href="#" onclick="res()">Resource Sharing</a></li>
@@ -152,10 +174,21 @@
                   <div class="checkbox">
                     <label><input type="checkbox">Are you a Mentor ? </label>
                   </div>
+                    <button onclick="cancelRegistration()" class="btn btn-default">Cancel</button>
                   <button onclick="login()" class="btn btn-default">Submit</button>
                 </form>
 
                  
     </div>
+        <div id="mentors" style="display:none">
+                <form role="form">
+                    <button onclick="closeMentors()" class="btn btn-default">back</button>
+                  <div class="form-group">
+                    <label for="name">List of Availabe Mentors:</label>
+                    <input type="name" class="form-control" id="name">
+                      <div><ul id="mentor-list"></ul></div>
+                  </div>
+  
+    <div><ul id="test-list"></ul></div>
 </body>
 </html>
