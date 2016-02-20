@@ -9,12 +9,13 @@ from tornado import web
 
 APPLICATION = web.Application(
     [
+        # (r'.*/v1/token/?$', UserHandler)
         (r'.*/v1/token/?$', UserHandler)
     ])
 
 
 if __name__ == '__main__':
-    PORT = int(sys.argv[1].lstrip('-port='))
+    PORT = 9000
     APPLICATION.listen(PORT)
     print(PORT)
 
