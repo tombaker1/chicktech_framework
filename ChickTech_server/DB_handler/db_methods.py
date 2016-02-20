@@ -11,8 +11,9 @@ class DBManager():
 
     def insertProfile (self, profile):
         try:
-            ret = self.collection.insert_one(profile).inserted_id
-            print(ret)
+            # ret = self.collection.insert_one(profile).inserted_id
+            # print(ret)
+            self.collection.insert(profile)
 
         except Exception as E:
             print(E)
