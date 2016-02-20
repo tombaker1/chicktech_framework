@@ -42,3 +42,8 @@ function myEventHandler() {
 
 
 // ...additional event handlers here...
+
+function sendRegistration(message) {
+    console.log("sendRegistration");
+    console.log(message);
+}

@@ -4,7 +4,7 @@
     "creationData": {
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "projectGuid": "9e8106f8-03d8-402a-b727-bed219167680",
-      "lastModifiedDate": 1455919942918,
+      "lastModifiedDate": 1455990130908,
       "creationDate": 1455919764655
     },
     "XDK-app-designer": "false",
@@ -97,12 +97,17 @@
         "appName_": "client_framework",
         "appID_": "xdk.intel.cordova.template.lite",
         "appAccess_": {
-          "mode": "legacy",
+          "mode": "whitelist",
           "network": [
             "*"
           ],
-          "intents": [],
-          "navigation": []
+          "intents": [
+            "*"
+          ],
+          "navigation": [
+            "http://192.168.1.236/",
+            "*"
+          ]
         },
         "icons_": [],
         "splashes_": [],
