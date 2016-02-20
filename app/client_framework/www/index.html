@@ -122,6 +122,69 @@
         getMentors()
     }
         
+	function getgeo() {
+		$("#main").hide();
+		$("#friendsmapwrapper").show();
+		getLocation();
+		getUsers();
+	}
+
+
+	
+    var x = document.getElementById("mygeoloc");
+    var latitude;
+    var longitude;
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            var options = {timeout:60000};
+            navigator.geolocation.getCurrentPosition(showLocation, errorHandler, options);
+        } else {
+            alert("Geolocation is not supported by this browser.");
+            x.innerHTML  = "Geolocation is not supported by this browser.";
+        }
+    }
+
+    function errorHandler(err) {
+        if(err.code == 1) {
+            alert("Error: Access is denied!");
+        }
+
+        else if( err.code == 2) {
+            alert("Error: Position is unavailable!");
+        }
+    }
+
+    function showLocation(position) {
+        var msg = "Latitude: " + position.coords.latitude +
+        "<br>Longitude: " + position.coords.longitude;
+
+        document.getElementById("mygeoloc").innerHTML = msg;
+        console.log(msg);
+
+        latitude = position.coords.latitude;
+        longitude = position.coords.longitude;
+    }
+
+    function getUsers(){
+        var serverUrl = "http://192.168.1.236:9000/user";
+        $.getJSON( serverUrl, function( data ) {            
+            var names = [];
+            var html="<ul>";
+            $.each(data, function( index, value ) {                
+                if(names.indexOf(value.name) == -1)
+                {
+                    html += "<li>"+ value.name + "</li>";
+                    names.push(value.name);
+                }
+            });
+            
+            html +="</ul>";
+            
+             $("#friendsmap").empty().append(html);
+        
+        });
+    }
 
     </script>
 </head>
@@ -139,6 +202,8 @@
 
         <li><a href="#" onclick="mentors()" >Mentors</a></li>
         <li><a href="#">Mentee</a></li>
+        <li><a href="#" onclick="getgeo()">FindMyLocation</a></li>
+
         <li><a href="#" onclick="jobs()">Job Opportunities</a></li>
         <li><a href="#" onclick="res()">Resource Sharing</a></li>
         <li><a href="#">Support</a></li>
@@ -188,7 +253,12 @@
                     <input type="name" class="form-control" id="name">
                       <div><ul id="mentor-list"></ul></div>
                   </div>
-  
-    <div><ul id="test-list"></ul></div>
+      <div id="friendsmapwrapper" style="display:none">
+        <p>My Geo Location</p>
+        <div id="mygeoloc"></div>
+        <div id="friendsmap" style="border:1px;width:80%;height:80%;"></div>
+    </div>
+                    
+
 </body>
 </html>
