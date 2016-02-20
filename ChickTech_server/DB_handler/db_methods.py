@@ -19,12 +19,12 @@ class DBManager():
             print(E.args)
 
     def listProfiles(self):
+        profileList = []
         try:
-            # profiles = self.collection.find()
-            # print(profiles.len)
             for doc in self.collection.find():
                 print(doc)
-            return doc
+                profileList.append(doc)
+            return profileList
 
         except Exception as E:
             print(E.args)

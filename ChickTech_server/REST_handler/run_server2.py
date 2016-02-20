@@ -9,11 +9,19 @@ import json
 from DB_handler.db_methods import DBManager
 
 
+def modify(profiles):
+    for profile in profiles:
+        del profile["_id"]
+    return profiles
+
+
+
 class UserHandler2(tornado.web.RequestHandler):
     def get(self):
         manager = DBManager()
         profiles = manager.listProfiles()
-        response = json.dumps(profiles)
+        modified_profiles = modify(profiles)
+        response = json.dumps(modified_profiles)
         self.write(response)
 
     def post(self, *args, **kwargs):
