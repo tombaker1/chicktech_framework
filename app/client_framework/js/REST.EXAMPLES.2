@@ -1,0 +1,96 @@
+/IT MIKA. MORE EXAMPLES REGARDLESS WE MUST USE APACHE
+
+String urlParameters  = "param1=a&param2=b&param3=c";
+byte[] postData       = urlParameters.getBytes( StandardCharsets.UTF_8 );
+int    postDataLength = postData.length;
+String request        = "http://example.com/index.php";
+URL    url            = new URL( request );
+HttpURLConnection conn= (HttpURLConnection) url.openConnection();           
+conn.setDoOutput( true );
+conn.setInstanceFollowRedirects( false );
+conn.setRequestMethod( "POST" );
+conn.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded"); 
+conn.setRequestProperty( "charset", "utf-8");
+conn.setRequestProperty( "Content-Length", Integer.toString( postDataLength ));
+conn.setUseCaches( false );
+try( DataOutputStream wr = new DataOutputStream( conn.getOutputStream())) {
+   wr.write( postData );
+}
+
+
+
+
+
+
+If you are calling a RESTful service from a Service Provider (e.g Facebook, Twitter), you can do it with any flavour of your choice:
+
+If you don't want to use external libraries, you can use java.net.HttpURLConnection or javax.net.ssl.HttpsURLConnection (for SSL), but that is call encapsulated in a Factory type pattern in java.net.URLConnection. To receive the result, you will have to connection.getInputStream() which returns you an InputStream. You will then have to convert your input stream to string and parse the string into it's representative object (e.g. XML, JSON, etc).
+
+Alternatively, Apache HttpClient (version 4 is the latest). It's more stable and robust than java's default URLConnection and it supports most (if not all) HTTP protocol (as well as it can be set to Strict mode). Your response will still be in InputStream and you can use it as mentioned above.
+
+
+
+
+
+
+
+
+	
+Update: It’s been almost 5 years since I wrote the answer below; today I have a different perspective.
+
+99% of the time when people use the term REST, they really mean HTTP; they could care less about “resources”, “representations”, “state transfers”, “uniform interfaces”, “hypermedia”, or any other constraints or aspects of the REST architecture style identified by Fielding. The abstractions provided by various REST frameworks are therefore confusing and unhelpful.
+
+So: you want to send HTTP requests using Java in 2015. You want an API that is clear, expressive, intuitive, idiomatic, simple. What to use? I no longer use Java, but for the past few years the Java HTTP client library that has seemed the most promising and interesting is OkHttp. Check it out.
+
+You can definitely interact with RESTful web services by using URLConnection or HTTPClient to code HTTP requests.
+
+However, it's generally more desirable to use a library or framework which provides a simpler and more semantic API specifically designed for this purpose. This makes the code easier to write, read, and debug, and reduces duplication of effort. These frameworks generally implement some great features which aren't necessarily present or easy to use in lower-level libraries, such as content negotiation, caching, and authentication.
+
+Some of the most mature options are Jersey, RESTEasy, and Restlet.
+
+I'm most familiar with Restlet, and Jersey, let's look at how we'd make a POST request with both APIs.
+
+Jersey Example
+Form form = new Form();
+form.add("x", "foo");
+form.add("y", "bar");
+
+Client client = ClientBuilder.newClient();
+
+WebTarget resource = client.target("http://localhost:8080/someresource");
+
+Builder request = resource.request();
+request.accept(MediaType.APPLICATION_JSON);
+
+Response response = request.get();
+
+if (response.getStatusInfo().getFamily() == Family.SUCCESSFUL) {
+    System.out.println("Success! " + response.getStatus());
+    System.out.println(response.getEntity());
+} else {
+    System.out.println("ERROR! " + response.getStatus());    
+    System.out.println(response.getEntity());
+}
+Restlet Example
+Form form = new Form();
+form.add("x", "foo");
+form.add("y", "bar");
+
+ClientResource resource = new ClientResource("http://localhost:8080/someresource");
+
+Response response = resource.post(form.getWebRepresentation());
+
+if (response.getStatus().isSuccess()) {
+    System.out.println("Success! " + response.getStatus());
+    System.out.println(response.getEntity().getText());
+} else {
+    System.out.println("ERROR! " + response.getStatus());
+    System.out.println(response.getEntity().getText());
+}
+Of course, GET requests are even simpler, and you can also specify things like entity tags and Accept headers, but hopefully these examples are usefully non-trivial but not too complex.
+
+As you can see, Restlet and Jersey have similar client APIs. I believe they were developed around the same time, and therefore influenced each other.
+
+I find the Restlet API to be a little more semantic, and therefore a little clearer, but YMMV.
+
+As I said, I'm most familiar with Restlet, I've used it in many apps for years, and I'm very happy with it. It's a very mature, robust, simple, effective, active, and well-supported framework. I can't speak to Jersey or RESTEasy, but my impression is that they're both also solid choices.
