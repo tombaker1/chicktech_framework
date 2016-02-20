@@ -46,23 +46,23 @@
             console.log(message);
             var serverUrl = "http://192.168.1.236:9000/user";
             
-            var request = $.ajax({
+            request = $.ajax({
                     method: "POST",
                     url: serverUrl,
                     data: message,
-                    success: function(response) {
-                        console.log(response);
-                    }
+                   // success: function(response) {
+                   //     console.log(response);
+                   // }
 
                      });
 
-            //request.done(function( msg ) {
-            //    console.log(msg);
-            //    });
+            request.done(function( msg ) {
+                console.log(msg);
+                });
  
-            //request.fail(function( jqXHR, textStatus ) {
-            //   console.log("Request failed: " + textStatus);
-            //});
+            request.fail(function( jqXHR, textStatus ) {
+               console.log("Request failed: " + textStatus);
+            });
 
         }
         
@@ -90,6 +90,10 @@
             request.done(function( msg ) {
                 console.log(msg);
                 var mentorList = JSON.parse(msg);
+                for (i = 0; i < mentorList.length; i++) {
+                    var m = mentorList[i];
+                    console.log(m.name);
+                }
                 });
  
             request.fail(function( jqXHR, textStatus ) {
