@@ -18,11 +18,12 @@ def modify(profiles):
 
 class UserHandler2(tornado.web.RequestHandler):
     def get(self):
-        query = self.request.query
+        keys = self.request.query_arguments
         manager = DBManager()
-        if query != "":
-            list = query.split("=")
-            dict = {list[0]:list[1]}
+        if keys != "":
+            dict = {}
+            for k in keys:
+                dict.update({k:keys[k][0].decode("utf-8")})
             profiles = manager.listDesiredProfiles(dict)
         else:
             profiles = manager.listProfiles()
