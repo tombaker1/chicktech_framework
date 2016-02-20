@@ -29,6 +29,15 @@
         $("#registration").show()
     }
     </script>
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="popover"]').popover(); 
+        });
+        
+        function login(){
+            alert()
+        }
+    </script>
 </head>
 
 <body>
@@ -46,7 +55,8 @@
         <li><a href="#">Mentee</a></li>
         <li><a href="#">Job Opportunities</a></li>
         <li><a href="#">Resource Sharing</a></li>
-        <li><a href="#">Support</a></li>
+        <li><a href="#">Support  data-toggle="popover" title="Popover Header" data-content="Some content inside the popover">Toggle popover</a></li>
+        
       </ul>
     </div>
     </div>
@@ -61,12 +71,16 @@
                     <input type="password" class="form-control" id="pwd">
                   </div>
                   <div class="checkbox">
-                    <label><input type="checkbox"> Remember me</label>
+                    <label><input type="checkbox">Continue</label>
                   </div>
-                  <button type="submit" class="btn btn-default">Submit</button>
+                    
+                    
+                  <button type="submit_" onclick=login() class="btn btn-default">Submit 1</button>
                 </form>
 
                  
     </div>
+    
+    
 </body>
 </html>
