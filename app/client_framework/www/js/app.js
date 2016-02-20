@@ -50,5 +50,7 @@ document.addEventListener("app.Ready", onAppReady, false) ;
 // messages that can help you debug Cordova app initialization issues.
 
 var app = {
-    communicator: null
+    communicator: null,
+    
 };
+
