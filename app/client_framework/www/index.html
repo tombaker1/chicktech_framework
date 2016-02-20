@@ -33,21 +33,15 @@
 
 <body>
 <h1>Chick tech App</h1>
-    <div id="main" class="panel">
+    <div id="main">
     <p>Welcome</p>
         <div class="dropdown">
       <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Available Features
       <span class="caret"></span></button>
       <ul class="dropdown-menu">
         <li><a href="#" onclick="reg()">Registration</a></li>
-                  <div class="form-group">
-                      <label for="usr">Name:</label>
-                      <input type="text" class="form-control" id="usr">
-                 </div>
-<div class="form-group">
-  <label for="pwd">Password:</label>
-  <input type="password" class="form-control" id="pwd">
-</div>
+
+
         <li><a href="#">Mentors</a></li>
         <li><a href="#">Mentee</a></li>
         <li><a href="#">Job Opportunities</a></li>
@@ -56,9 +50,23 @@
       </ul>
     </div>
     </div>
-    <div id="registration" class="panel">
-    Page1
+    <div id="registration" style="display:none">
+                <form role="form">
+                  <div class="form-group">
+                    <label for="email">Email address:</label>
+                    <input type="email" class="form-control" id="email">
+                  </div>
+                  <div class="form-group">
+                    <label for="pwd">Password:</label>
+                    <input type="password" class="form-control" id="pwd">
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox"> Remember me</label>
+                  </div>
+                  <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+
+                 
     </div>
-    
 </body>
 </html>
