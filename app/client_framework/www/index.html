@@ -46,16 +46,20 @@
             var request = $.ajax({
                     method: "POST",
                     url: serverUrl,
-                    data: message//,
+                    data: message,
+                    success: function(response) {
+                        console.log(response);
+                    }
+
                      });
 
-            request.done(function( msg ) {
-                console.log(msg);
-                });
+            //request.done(function( msg ) {
+            //    console.log(msg);
+            //    });
  
-            request.fail(function( jqXHR, textStatus ) {
-               console.log("Request failed: " + textStatus);
-            });
+            //request.fail(function( jqXHR, textStatus ) {
+            //   console.log("Request failed: " + textStatus);
+            //});
 
         }
         
