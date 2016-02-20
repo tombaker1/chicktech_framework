@@ -16,4 +16,15 @@ class DBManager():
             self.collection.insert(profile)
 
         except Exception as E:
-            print(E)
+            print(E.args)
+
+    def listProfiles(self):
+        try:
+            # profiles = self.collection.find()
+            # print(profiles.len)
+            for doc in self.collection.find():
+                print(doc)
+            return doc
+
+        except Exception as E:
+            print(E.args)

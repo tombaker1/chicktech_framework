@@ -11,7 +11,9 @@ from DB_handler.db_methods import DBManager
 
 class UserHandler2(tornado.web.RequestHandler):
     def get(self):
-        response = {'Received': 'GET'}
+        manager = DBManager()
+        profiles = manager.listProfiles()
+        response = json.dumps(profiles)
         self.write(response)
 
     def post(self, *args, **kwargs):
@@ -21,7 +23,8 @@ class UserHandler2(tornado.web.RequestHandler):
             profile = jsonbody.get("data").get("profile")
             manager = DBManager()
             manager.insertProfile(profile)
-            response = {'Received': profile}
+            # response = json.dumps(profile)
+            response = {'message': 'Data was inserted Successfully'}
             self.write(response)
         except Exception as ex:
             self.write({"error": "error happened"})
