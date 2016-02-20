@@ -28,3 +28,13 @@ class DBManager():
 
         except Exception as E:
             print(E.args)
+
+    def listDesiredProfiles(self, filters):
+        profileList = []
+        try:
+            for filter in filters:
+                profileList.append(self.collection.find(filter))
+            return profileList
+
+        except Exception as E:
+            print(E.args)
