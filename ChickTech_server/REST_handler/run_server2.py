@@ -5,12 +5,25 @@ from datetime import date
 import tornado.escape
 import tornado.ioloop
 import tornado.web
+import json
 
 class UserHandler2(tornado.web.RequestHandler):
     def get(self):
-        response = { 'version': '3.5.1',
-                     'last_build':  date.today().isoformat() }
+        response = {'Received': 'GET'}
         self.write(response)
+
+    def post(self, *args, **kwargs):
+        try:
+            body = self.request.body.decode("utf-8")
+            jsonbody = json.loads(body)
+            profile = jsonbody.get("data").get("profile")
+
+            response = {'Received': profile}
+            self.write(response)
+        except Exception as ex:
+            self.write({"error": "error happened"})
+
+
 
 
 application = tornado.web.Application([
