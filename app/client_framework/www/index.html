@@ -36,8 +36,30 @@
        alert("List of Resources SW, HW, Training Material")
     }
     function jobs(){
-       alert("List of Intern jobs at Intel")
+       alert("List of Intern jobs at Intel");
     }
+    function events(){
+       alert("List of Events at Intel");
+    }
+        
+        function sendRegistration(message) {
+            console.log(message);
+            var serverUrl = "http://192.168.1.236:9000/user";
+            
+            var request = $.ajax({
+                    method: "POST",
+                    url: serverUrl,
+                    data: message//,
+                     });
+            
+            request.done(function( msg ) {
+                console.log(msg);
+                });
+ 
+            request.fail(function( jqXHR, textStatus ) {
+        console.log("Request failed: " + textStatus);
+            });
+        }
         
     function login(){
         var name = $("#name").val();
@@ -46,7 +68,9 @@
         var expertise = $("#expertise").val();
         var areaofinterest = $("#areaofinterest").val();
         var obj = {data:{profile:{name:name,email:email,company:company,expertise:expertise,areaofinterest:areaofinterest}}};
-        alert(JSON.stringify(obj));
+        //alert(JSON.stringify(obj));
+        var message = JSON.stringify(obj);
+        sendRegistration(message);
     }    
     </script>
 </head>
@@ -67,6 +91,7 @@
         <li><a href="#" onclick="jobs()">Job Opportunities</a></li>
         <li><a href="#" onclick="res()">Resource Sharing</a></li>
         <li><a href="#">Support</a></li>
+        <li><a href="#" onclick="events()" > Upcoming Events</a></li>
         <li><a href="#">Search</a></li>
         <li><a href="#" onclick="about()">About us</a></li>
       </ul>

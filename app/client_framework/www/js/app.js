@@ -43,15 +43,16 @@ function myEventHandler() {
 
 // ...additional event handlers here...
 
-$( "#id_btnSubmit" ).submit(function( event ) {
-  alert( "Handler for .submit() called." );
-  event.preventDefault();
-    console.log("Handler for .submit() called.");
-});
-
 
 $( "#id_btnSubmit" ).click(function( event ) {
   alert( "Handler for .submit() called." );
   event.preventDefault();
     console.log("Handler for .submit() called.");
+    
+    // fill message
+    message = {}
+    message.name = $("input[name='Name']").val();
+    message.name = $("input[name='Email']").val();
+    message.name = $("input[name='Phone']").val();
+    console.log(message.name);
 });
