@@ -6,6 +6,8 @@ import tornado.escape
 import tornado.ioloop
 import tornado.web
 import json
+from DB_handler.db_methods import DBManager
+
 
 class UserHandler2(tornado.web.RequestHandler):
     def get(self):
@@ -17,7 +19,8 @@ class UserHandler2(tornado.web.RequestHandler):
             body = self.request.body.decode("utf-8")
             jsonbody = json.loads(body)
             profile = jsonbody.get("data").get("profile")
-
+            manager = DBManager()
+            manager.insertProfile(profile)
             response = {'Received': profile}
             self.write(response)
         except Exception as ex:
