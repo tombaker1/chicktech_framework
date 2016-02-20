@@ -22,23 +22,42 @@
     <script src="js/app.js"></script>           <!-- recommended location of your JavaScript code relative to other JS files -->
     <script src="xdk/init-dev.js"></script>     <!-- normalizes device and document ready events, see README for details -->
     <link href="library/bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script>
     
+    function reg(){
+        $("#main").hide()
+        $("#registration").show()
+    }
+    </script>
 </head>
 
 <body>
 <h1>Chick tech App</h1>
+    <div id="main" class="panel">
     <p>Welcome</p>
         <div class="dropdown">
       <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Available Features
       <span class="caret"></span></button>
       <ul class="dropdown-menu">
-        <li><a href="#">Registration</a></li>
+        <li><a href="#" onclick="reg()">Registration</a></li>
+                  <div class="form-group">
+                      <label for="usr">Name:</label>
+                      <input type="text" class="form-control" id="usr">
+                 </div>
+<div class="form-group">
+  <label for="pwd">Password:</label>
+  <input type="password" class="form-control" id="pwd">
+</div>
         <li><a href="#">Mentors</a></li>
         <li><a href="#">Mentee</a></li>
         <li><a href="#">Job Opportunities</a></li>
         <li><a href="#">Resource Sharing</a></li>
         <li><a href="#">Support</a></li>
       </ul>
+    </div>
+    </div>
+    <div id="registration" class="panel">
+    Page1
     </div>
     
 </body>
