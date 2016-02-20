@@ -18,10 +18,19 @@ def modify(profiles):
 
 class UserHandler2(tornado.web.RequestHandler):
     def get(self):
+        query = self.request.query
         manager = DBManager()
-        profiles = manager.listProfiles()
+        if query != "":
+            list = query.split("=")
+            dict = {list[0]:list[1]}
+            profiles = manager.listDesiredProfiles(dict)
+        else:
+            profiles = manager.listProfiles()
+
+
         modified_profiles = modify(profiles)
         response = json.dumps(modified_profiles)
+
         self.write(response)
 
     def post(self, *args, **kwargs):
