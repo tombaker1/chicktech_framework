@@ -1,7 +1,5 @@
-from REST_handler import UserHandler
 
 __author__ = 'Nafisa'
-from datetime import date
 import tornado.escape
 import tornado.ioloop
 import tornado.web
@@ -19,6 +17,9 @@ def modify(profiles):
 class UserHandler2(tornado.web.RequestHandler):
     def get(self):
         query = self.request.query
+        # self.request.headers.get('Origin', '*')
+        self.set_header("Access-Control-Allow-Origin", '*')
+        print("Received GET request")
         manager = DBManager()
         if query != "":
             list = query.split("=")
@@ -27,7 +28,6 @@ class UserHandler2(tornado.web.RequestHandler):
         else:
             profiles = manager.listProfiles()
 
-
         modified_profiles = modify(profiles)
         response = json.dumps(modified_profiles)
 
@@ -35,6 +35,9 @@ class UserHandler2(tornado.web.RequestHandler):
 
     def post(self, *args, **kwargs):
         try:
+            # self.request.headers.get('Origin', '*')
+            self.set_header("Access-Control-Allow-Origin", '*')
+            print("Received POST request")
             body = self.request.body.decode("utf-8")
             jsonbody = json.loads(body)
             profile = jsonbody.get("data").get("profile")
