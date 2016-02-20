@@ -32,8 +32,9 @@ class DBManager():
     def listDesiredProfiles(self, filters):
         profileList = []
         try:
-            for filter in filters:
-                profileList.append(self.collection.find(filter))
+            for doc in self.collection.find(filters):
+                print(doc)
+                profileList.append(doc)
             return profileList
 
         except Exception as E:
