@@ -42,24 +42,37 @@
        alert("List of Events at Intel");
     }
         
+         function cancelRegistration() {
+            $("#registration").hide()
+            $("#main").show()
+
+        }
         function sendRegistration(message) {
             console.log(message);
             var serverUrl = "http://192.168.1.236:9000/user";
             
-            var request = $.ajax({
+            request = $.ajax({
                     method: "POST",
                     url: serverUrl,
-                    data: message//,
+                    data: message,
+                   // success: function(response) {
+                   //     console.log(response);
+                   // }
+
                      });
-            
+
             request.done(function( msg ) {
                 console.log(msg);
+                cancelRegistration();
                 });
  
             request.fail(function( jqXHR, textStatus ) {
-        console.log("Request failed: " + textStatus);
+               console.log("Request failed: " + textStatus);
+                cancelRegistration();
             });
+
         }
+        
         
     function login(){
         var name = $("#name").val();
@@ -72,6 +85,113 @@
         var message = JSON.stringify(obj);
         sendRegistration(message);
     }    
+        
+               
+         function closeMentors() {
+            $("#mentors").hide()
+            $("#main").show()
+
+        }
+
+        function getMentors() {
+            var serverUrl = "http://192.168.1.236:9000/user";
+            var request = $.ajax({
+                    method: "GET",
+                    url: serverUrl,
+                    //data: message//,
+                     });
+
+            request.done(function( msg ) {
+                console.log(msg);
+                var mentorList = JSON.parse(msg);
+                for (i = 0; i < mentorList.length; i++) {
+                    var m = mentorList[i];
+                    console.log(m.name);
+                    $("#mentor-list").append("<li><b>" + m.name + "</b><br>" + m.expertise +"</li>")
+                }
+                });
+ 
+            request.fail(function( jqXHR, textStatus ) {
+               console.log("Request failed: " + textStatus);
+            });
+  
+        }
+    function mentors(){
+        $("#main").hide()
+        $("#mentors").show()
+        getMentors()
+    }
+        
+	function getgeo() {
+		$("#main").hide();
+		$("#friendsmapwrapper").show();
+		getLocation();
+		getUsers();
+	}
+
+
+	
+    var x = document.getElementById("mygeoloc");
+    var latitude;
+    var longitude;
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            var options = {timeout:60000};
+            navigator.geolocation.getCurrentPosition(showLocation, errorHandler, options);
+        } else {
+            alert("Geolocation is not supported by this browser.");
+            x.innerHTML  = "Geolocation is not supported by this browser.";
+        }
+    }
+
+    function errorHandler(err) {
+        if(err.code == 1) {
+            alert("Error: Access is denied!");
+        }
+
+        else if( err.code == 2) {
+            alert("Error: Position is unavailable!");
+        }
+    }
+
+    function showLocation(position) {
+        var msg = "Latitude: " + position.coords.latitude +
+        "<br>Longitude: " + position.coords.longitude;
+
+        // document.getElementById("mygeoloc").innerHTML = msg;
+        console.log(msg);
+        $("#mygeoloc").append(msg);
+
+        latitude = position.coords.latitude;
+        longitude = position.coords.longitude;
+    }
+
+    function getUsers(){
+        var serverUrl = "http://192.168.1.236:9000/user";
+        $.getJSON( serverUrl, function( data ) {            
+            var names = [];
+            var html="<ul>";
+            $.each(data, function( index, value ) {                
+                if(names.indexOf(value.name) == -1)
+                {
+                    html += "<li>"+ value.name + "</li>";
+                    names.push(value.name);
+                }
+            });
+            
+            html +="</ul>";
+            
+             $("#friendsmap").empty().append(html);
+        
+        });
+    }
+        function closeLocation() {
+            $("#friendsmapwrapper").hide()
+            $("#main").show()
+ 
+        }
+
     </script>
 </head>
 
@@ -86,14 +206,16 @@
         <li><a href="#" onclick="reg()">Registration</a></li>
 
 
-        <li><a href="#">Mentors</a></li>
+        <li><a href="#" onclick="mentors()" >Mentors</a></li>
         <li><a href="#">Mentee</a></li>
+        <li><a href="#" onclick="getgeo()">FindMyLocation</a></li>
+
         <li><a href="#" onclick="jobs()">Job Opportunities</a></li>
         <li><a href="#" onclick="res()">Resource Sharing</a></li>
         <li><a href="#">Support</a></li>
         <li><a href="#" onclick="events()" > Upcoming Events</a></li>
         <li><a href="#">Search</a></li>
-        <li><a href="#" onclick="about()">About us</a></li>
+        <li><a href="#" onclick="getMentors()">About us</a></li>
       </ul>
     </div>
     </div>
@@ -123,10 +245,29 @@
                   <div class="checkbox">
                     <label><input type="checkbox">Are you a Mentor ? </label>
                   </div>
+                    <button onclick="cancelRegistration()" class="btn btn-default">Cancel</button>
                   <button onclick="login()" class="btn btn-default">Submit</button>
                 </form>
 
                  
     </div>
+        <div id="mentors" style="display:none">
+                <form role="form">
+                    <button onclick="closeMentors()" class="btn btn-default">back</button>
+                  <div class="form-group">
+                    <label for="name">List of Availabe Mentors:</label>
+                    <input type="name" class="form-control" id="name">
+                      <div><ul id="mentor-list"></ul></div>
+                  </div>>
+            </form>
+    </div>
+      <div id="friendsmapwrapper" style="display:none">
+          <button onclick="closeLocation()" class="btn btn-default">back</button>
+        <p>My Geo Location</p>
+        <div id="mygeoloc"></div>
+        <div id="friendsmap" style="border:1px;width:80%;height:80%;"></div>
+    </div>
+                    
+
 </body>
 </html>
